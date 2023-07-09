@@ -42,7 +42,7 @@ Link : - https://sylver-frontend.vercel.app/
 - SignUp
 - Update
 
-##To Dockerize a React app, you can follow these steps:
+## To Dockerize a React app, you can follow these steps:
 
 1. Create a Dockerfile in the root directory of your React app.
    
