@@ -1,11 +1,13 @@
 import React from "react";
-// import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import { Button, Box } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-const Navbar = () => {
+const UpdateNavbar = () => {
   const navigate = useNavigate();
-
+  const handleClick = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   return (
     <>
       <Box
@@ -28,31 +30,13 @@ const Navbar = () => {
             bg: "RGB(160 198 255)",
             color: "white",
           }}
-          onClick={() => navigate("/login")}
+          onClick={handleClick}
         >
-          Login
-          {/* <Link to={"/login"}>Login</Link> */}
-        </Button>
-
-        <Button
-          style={{
-            boxShadow:
-              "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset",
-            padding: "30px 50px",
-            fontSize: "20px",
-          }}
-          _hover={{
-            bg: "RGB(160 198 255)",
-            color: "white",
-          }}
-          onClick={() => navigate("/signup")}
-        >
-          SignUp
-          {/* <Link to={"/signup"}>SignUp</Link> */}
+          Logout
         </Button>
       </Box>
     </>
   );
 };
 
-export default Navbar;
+export default UpdateNavbar;

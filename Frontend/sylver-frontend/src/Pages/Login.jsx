@@ -32,10 +32,7 @@ export default function Login() {
       };
 
       axios
-        .post(
-          `https://cute-gray-gecko-coat.cyclic.app/users/login`,
-          userData
-        )
+        .post(`https://cute-gray-gecko-coat.cyclic.app/users/login`, userData)
         .then((res) => {
           toast({
             title: "Login Successful.",
@@ -43,8 +40,10 @@ export default function Login() {
             duration: 3000,
             isClosable: true,
           });
+          
+          localStorage.setItem("token", JSON.stringify(res.data.token));
           localStorage.setItem("user", JSON.stringify(res.data.user));
-          navigate("/details");
+          navigate("/update");
         })
         .catch((err) => {
           toast({
@@ -81,8 +80,8 @@ export default function Login() {
           maxW={"lg"}
           py={8}
           px={6}
-        //   style={{ border: "2px solid black" }}
-        //   mt={-100}
+          //   style={{ border: "2px solid black" }}
+          //   mt={-100}
         >
           <Stack align={"center"}>
             <Heading color={"#0066ff"} fontSize={"4xl"}>
@@ -95,7 +94,9 @@ export default function Login() {
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
-            boxShadow={"rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset"}
+            boxShadow={
+              "rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset"
+            }
             p={5}
             // style={{ border: "2px solid black" }}
           >
@@ -116,9 +117,9 @@ export default function Login() {
               </FormControl>
               <Stack spacing={10}>
                 <Button
-                m={"auto"}
-                my={"3"}
-                width={"40"}
+                  m={"auto"}
+                  my={"3"}
+                  width={"40"}
                   bg={"#0066ff"}
                   color={"white"}
                   _hover={{

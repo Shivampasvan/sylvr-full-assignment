@@ -1,80 +1,73 @@
+import React from "react";
 import {
   Flex,
   Box,
   FormControl,
   FormLabel,
   Input,
-  InputGroup,
   HStack,
-  InputRightElement,
   Stack,
   Button,
   Heading,
-  Text,
   useColorModeValue,
-  Link,
   useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Navbar from "../Components/Navbar";
+import DetailsNavbar from "../Components/UpdateNavbar";
 
-export default function Signup() {
+const Update = () => {
+  let token = JSON.parse(localStorage.getItem("token"));
+  // console.log(token);
+  let user = JSON.parse(localStorage.getItem("user"));
+  // console.log(user);
+
   const toast = useToast();
-  const [showPassword, setShowPassword] = useState(false);
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const navigate = useNavigate();
+  const [firstname, setFirstname] = useState(user[0].firstname);
+  const [lastname, setLastname] = useState(user[0].lastname);
+  const [email, setEmail] = useState(user[0].email);
+  
 
   const handleClick = () => {
-    if (
-      firstname !== "" &&
-      lastname !== "" &&
-      email !== "" &&
-      password !== ""
-    ) {
+    if (firstname !== "" && lastname !== "" && email !== "") {
       const userData = {
         firstname,
         lastname,
         email,
-        password,
       };
 
       axios
-        .post(
-          `https://cute-gray-gecko-coat.cyclic.app/users/register`,
-          userData
+        .patch(
+          `https://cute-gray-gecko-coat.cyclic.app/users/update/${user[0]._id}`,
+          userData,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         .then((res) => {
           toast({
-            title: "Registration Successful.",
+            title: "Credentials Updated Successfully !!",
             status: "success",
             duration: 3000,
             isClosable: true,
           });
-          setFirstname("");
-          setLastname("");
-          setEmail("");
-          setPassword("");
+          // console.log(res);
         })
         .catch((err) => {
           toast({
-            title: "Error in Registration.",
+            title: "Error in Updation !!",
             status: "error",
             duration: 3000,
             isClosable: true,
           });
-          console.log(err);
+          // console.log(err);
         });
     } else {
+      //   alert("Testing");
       toast({
-        title: "All Fields Required",
-        description: `Please Fill Required Credentials`,
+        title: "All credentials required !!",
         status: "error",
         duration: 3000,
         isClosable: true,
@@ -84,22 +77,19 @@ export default function Signup() {
 
   return (
     <>
-      <Navbar />
+      <DetailsNavbar />
       <Flex
         fontFamily={"Open Sans, sans-serif, Arial, Helvetica"}
-        minH={"100vh"}
+        minH={"70vh"}
         align={"center"}
         justify={"center"}
         bg={useColorModeValue("gray.50", "gray.800")}
       >
-        <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6} width={"35%"}>
+        <Stack spacing={8} mx={"auto"} maxW={"lg"} py={4} px={6} width={"35%"}>
           <Stack align={"center"}>
             <Heading color={"#0066ff"} fontSize={"4xl"} textAlign={"center"}>
-              Sign up to creat a new account
+              Update account details
             </Heading>
-            <Text fontSize={"lg"} color={"gray.600"}>
-              to enjoy all of our cool features
-            </Text>
           </Stack>
           <Box
             rounded={"lg"}
@@ -113,10 +103,10 @@ export default function Signup() {
               <HStack>
                 <Box style={{ width: "100%" }}>
                   <FormControl id="firstName" isRequired>
-                    <FormLabel>First Name</FormLabel>
+                    <FormLabel>Update First Name</FormLabel>
                     <Input
-                      type="text"
                       value={firstname}
+                      type="text"
                       onChange={(e) => setFirstname(e.target.value)}
                     />
                   </FormControl>
@@ -125,48 +115,24 @@ export default function Signup() {
               <HStack>
                 <Box style={{ width: "100%" }}>
                   <FormControl id="lastName" isRequired>
-                    <FormLabel>Last Name</FormLabel>
+                    <FormLabel>Update Last Name</FormLabel>
                     <Input
-                      type="text"
                       value={lastname}
+                      type="text"
                       onChange={(e) => setLastname(e.target.value)}
                     />
                   </FormControl>
                 </Box>
               </HStack>
               <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
+                <FormLabel>Update Email address</FormLabel>
                 <Input
                   value={email}
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </FormControl>
-              <FormControl id="password" isRequired>
-                <FormLabel>Password</FormLabel>
-                <InputGroup>
-                  <Input
-                    value={password}
-                    type={showPassword ? "text" : "password"}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
-                  <InputRightElement h={"full"}>
-                    <Button
-                      variant={"ghost"}
-                      bg={"#0066ff"}
-                      color={"white"}
-                      _hover={{
-                        bg: "blue.300",
-                      }}
-                      onClick={() =>
-                        setShowPassword((showPassword) => !showPassword)
-                      }
-                    >
-                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                    </Button>
-                  </InputRightElement>
-                </InputGroup>
-              </FormControl>
+
               <Stack spacing={10} pt={2}>
                 <Button
                   loadingText="Submitting"
@@ -181,16 +147,8 @@ export default function Signup() {
                   }}
                   onClick={handleClick}
                 >
-                  Create Account
+                  Update Details
                 </Button>
-              </Stack>
-              <Stack>
-                <Text align={"center"}>
-                  Already a user?{" "}
-                  <Link onClick={() => navigate("/login")} color={"#0066ff"}>
-                    Login
-                  </Link>
-                </Text>
               </Stack>
             </Stack>
           </Box>
@@ -198,4 +156,6 @@ export default function Signup() {
       </Flex>
     </>
   );
-}
+};
+
+export default Update;
