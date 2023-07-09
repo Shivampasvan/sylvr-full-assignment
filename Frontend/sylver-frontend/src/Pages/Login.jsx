@@ -40,7 +40,7 @@ export default function Login() {
             duration: 3000,
             isClosable: true,
           });
-          
+
           localStorage.setItem("token", JSON.stringify(res.data.token));
           localStorage.setItem("user", JSON.stringify(res.data.user));
           navigate("/update");
@@ -101,19 +101,19 @@ export default function Login() {
             // style={{ border: "2px solid black" }}
           >
             <Stack spacing={4}>
-              <FormControl id="email">
+              <FormControl id="email" isRequired>
                 <FormLabel>Email address</FormLabel>
                 <Input
                   type="email"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </FormControl>
-              <FormControl
-                id="password"
-                onChange={(e) => setPassword(e.target.value)}
-              >
+              <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input
+                  type="password"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </FormControl>
               <Stack spacing={10}>
                 <Button
