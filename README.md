@@ -97,27 +97,6 @@ CMD ["npm", "start"]
 
 That's it! Your React app is now Dockerized and running inside a container. Make sure to replace "my-react-app" with the desired name for your Docker image.
 
-## Run Locally
-
-Clone the project
-
-Go to the project directory
-
-```bash
-  cd Frontend
-```
-
-Install dependencies
-
-```bash
-  npm install
-```
-
-Start the server
-
-```bash
-  npm run start  (for frontend)
-```
 
 ## Feedback
 
