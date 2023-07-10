@@ -2,7 +2,7 @@ FROM node:16.16.0
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+COPY src/App /usr/share/node/app
 
 RUN npm install
 
