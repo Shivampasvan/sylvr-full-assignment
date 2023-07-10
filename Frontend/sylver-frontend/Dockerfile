@@ -6,6 +6,6 @@ COPY src/App /usr/share/node/app
 
 RUN npm install
 
-EXPOSE 3000
+EXPOSE 80:80
 
 CMD ["npm", "start"]
