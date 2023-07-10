@@ -1,6 +1,6 @@
 services:
 sylver-frontend:
-  image: node:16.16.0
+  image: node:16-alpine
     build:
       context: .Frontend/sylver-frontend
     container_name: sylver-frontend
